@@ -1,103 +1,116 @@
-import Image from "next/image";
+"use client";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import OrderFormDesktop from "@/components/OrderFormDesktop";
+import OrderbookDesktop from "@/components/orderbook/OrderbookDesktop";
+import { OrderImpactPanel } from "@/components/orderbook/OrderImpactPanel";
+import { MarketDepthChart } from "@/components/charts/MarketDepthChart";
+import { useSimulationStore } from "@/store/simulationStore";
+
+import { useThrottledOrderbook } from "@/hooks/use-throttled-orderbook";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { currentSimulation, isSimulating } = useSimulationStore();
+  
+  // Use throttled orderbook with configurable timing
+  const { orderbook, loading } = useThrottledOrderbook({
+    throttleMs: 1000, 
+    enabled: true
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="h-screen bg-gray-900 text-gray-50 flex flex-col overflow-hidden">
+      {/* Header */}
+      <header className="border-b border-gray-800 p-4 flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-semibold text-emerald-400">
+            Real-Time Orderbook Viewer
+          </h1>
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <span className="text-xs text-gray-400">Live</span>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </header>
+
+      {/* Mobile Tabs (visible on mobile only) */}
+      <div className="lg:hidden border-b border-gray-800 flex-shrink-0">
+        <Tabs defaultValue="orderbook" className="w-full h-full">
+          <TabsList className="grid w-full grid-cols-3 bg-transparent h-12 p-0 flex-shrink-0">
+            <TabsTrigger
+              value="form"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-emerald-500"
+            >
+              Order Form
+            </TabsTrigger>
+            <TabsTrigger
+              value="charts"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-emerald-500"
+            >
+              Charts
+            </TabsTrigger>
+            <TabsTrigger
+              value="orderbook"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-emerald-500"
+            >
+              Orderbook
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="form" className="p-4 overflow-y-auto h-[calc(100vh-120px)]">
+            <OrderFormDesktop />
+          </TabsContent>
+
+          <TabsContent value="orderbook" className="p-4 overflow-y-auto h-[calc(100vh-120px)]">
+            <OrderbookDesktop />
+          </TabsContent>
+
+          <TabsContent value="charts" className="p-4 space-y-4 overflow-y-auto h-[calc(100vh-120px)]">
+            <MarketDepthChart 
+              orderbook={orderbook}
+              loading={loading}
+              throttleMs={1000}
+              enableThrottling={true}
+            />
+            <OrderImpactPanel
+              metrics={currentSimulation?.metrics || null}
+              isLoading={isSimulating}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
+
+      {/* Desktop Layout Grid (hidden on mobile) */}
+      <div className="hidden lg:grid lg:grid-cols-12 gap-4 p-4 flex-1 min-h-0 overflow-hidden">
+        {/* Left Panel - Order Form */}
+        <div className="lg:col-span-3 h-full overflow-y-auto">
+          <OrderFormDesktop />
+        </div>
+
+        {/* Center Panel - Market Depth Chart & Order Impact */}
+        <div className="lg:col-span-6 flex flex-col h-full gap-4 min-h-0">
+          <div className="flex-[2] min-h-0 overflow-hidden">
+            <MarketDepthChart 
+              orderbook={orderbook}
+              loading={loading}
+              throttleMs={1000}
+              enableThrottling={true}
+            />
+          </div>
+          <div className="flex-1 min-h-0 overflow-hidden">
+            <OrderImpactPanel
+              metrics={currentSimulation?.metrics || null}
+              isLoading={isSimulating}
+            />
+          </div>
+        </div>
+
+        {/* Right Panel - Orderbook */}
+        <div className="lg:col-span-3 h-full overflow-hidden">
+          <OrderbookDesktop />
+        </div>
+      </div>
     </div>
   );
 }
