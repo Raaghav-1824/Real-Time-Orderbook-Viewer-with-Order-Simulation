@@ -20,8 +20,7 @@ export function mergeOrderBookUpdate( currentOrderbook :  OrderBookData,
                 lastUpdate: updates.lastUpdate || Date.now(),
             };
         }
-
-        //  Merge asks 
+        
   let mergedAsks = [...currentOrderbook.asks];
   if (updates.askUpdates) {
       updates.askUpdates.forEach(update => {

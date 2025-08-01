@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import OrderFormDesktop from "@/components/OrderFormDesktop";
+import OrderFormDesktop from "@/components/OrderForm/OrderFormDesktop";
 import OrderbookDesktop from "@/components/orderbook/OrderbookDesktop";
 import { OrderImpactPanel } from "@/components/orderbook/OrderImpactPanel";
 import { MarketDepthChart } from "@/components/charts/MarketDepthChart";

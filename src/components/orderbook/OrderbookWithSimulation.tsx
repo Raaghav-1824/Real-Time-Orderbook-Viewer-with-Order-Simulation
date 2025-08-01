@@ -122,7 +122,7 @@ export function OrderbookWithSimulation({ orderbook }: OrderbookWithSimulationPr
           <div className="text-right">Total</div>
         </div>
         
-        {orderbook.asks.slice(0, 11).reverse().map((level, i) => {
+        {orderbook.asks.slice(0, 13).reverse().map((level, i) => {
           const actualIndex = orderbook.asks.length - 1 - i;
           return (
             <OrderbookRow
@@ -154,7 +154,7 @@ export function OrderbookWithSimulation({ orderbook }: OrderbookWithSimulationPr
 
       {/* Bids */}
       <div className="space-y-1">
-        {orderbook.bids.slice(0, 11).map((level, i) => (
+        {orderbook.bids.slice(0, 13).map((level, i) => (
           <OrderbookRow
             key={`bid-${i}`}
             level={level}

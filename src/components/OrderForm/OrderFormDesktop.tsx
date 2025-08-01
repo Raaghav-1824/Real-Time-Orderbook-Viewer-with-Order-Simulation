@@ -2,9 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { VenueSelector } from "./venue/venueSelector";
+import { VenueSelector } from "./venueSelector";
 import { Venue } from "@/lib/types/orderbook";
-import { Dropdown } from "./ui/dropdown";
+import { Dropdown } from "../ui/dropdown";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -123,7 +123,7 @@ export function OrderFormDesktop() {
             </span>
           </div>
         </CardHeader>
-        <CardContent className="space-y-3 flex-1 overflow-y-auto">
+        <CardContent className="space-y-6 flex-1 overflow-y-auto">
           <>
             <VenueSelector />
           </>
@@ -168,7 +168,7 @@ export function OrderFormDesktop() {
             <Input
               type="number"
               min="0.01"
-              step="0.01"
+              step="1"
               label={orderType === "market" ? "Market Price" : "Limit Price"}
               placeholder="0.00"
               value={orderType === "market" ? getMarketPrice().toFixed(2) : (currentPrice || "")}
@@ -176,10 +176,10 @@ export function OrderFormDesktop() {
                 if (orderType === "limit") {
                   const inputValue = e.target.value;
                   if (inputValue === "") {
-                    setValue("price", 0.01);
+                    setValue("price", 0.1);
                   } else {
                     const parsed = parseFloat(inputValue);
-                    if (!isNaN(parsed) && parsed >= 0.01) {
+                    if (!isNaN(parsed) && parsed >= 0.1) {
                       setValue("price", parsed);
                     }
                   }
@@ -196,13 +196,7 @@ export function OrderFormDesktop() {
                 {errors.price.message}
               </p>
             )}
-            {/* {orderType === "market" && orderbook && (
-              // <div className="text-xs text-gray-400 px-1">
-              //   Best {side === "buy" ? "Ask" : "Bid"}: $
-              //   {getMarketPrice().toFixed(2)}
-              //   {loading && " (Updating...)"}
-              // </div>
-            )} */}
+            
           </div>
 
           <div className="space-y-1">

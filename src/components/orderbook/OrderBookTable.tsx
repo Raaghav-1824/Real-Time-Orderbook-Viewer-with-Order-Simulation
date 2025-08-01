@@ -1,4 +1,3 @@
-// src/components/orderbook/OrderbookTable.tsx
 'use client';
 
 import React from 'react';
@@ -26,7 +25,7 @@ export function OrderBookTable({
 }: OrderbookTableProps) {
   
   // Take only the number of levels we want to display
-  const displayAsks = asks.slice(0, maxLevels).reverse(); // Reverse for proper visual order
+  const displayAsks = asks.slice(0, maxLevels).reverse();
   const displayBids = bids.slice(0, maxLevels);
 
  

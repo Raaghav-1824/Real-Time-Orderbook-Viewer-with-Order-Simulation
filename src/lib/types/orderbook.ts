@@ -20,6 +20,7 @@ export interface IncrementalUpdate {
   bidUpdates?: OrderLevel[];
   lastUpdate?: number;
   isIncremental?: boolean;
+  
 }
 
 export type Venue = 'okx' | 'bybit' | 'deribit';

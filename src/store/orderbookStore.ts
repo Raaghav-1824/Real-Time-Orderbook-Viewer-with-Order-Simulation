@@ -152,6 +152,7 @@ export const useScalableOrderbookStore = create<ScalableOrderbookStore>((set, ge
     
     try {
       await client.connectWebSocket();
+      await new Promise(resolve => setTimeout(resolve, 100));
       if(selectedSymbol){
         client.subscribeToOrderbook(selectedSymbol);
       }
