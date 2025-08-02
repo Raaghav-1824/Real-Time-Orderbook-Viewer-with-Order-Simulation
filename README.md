@@ -4,49 +4,6 @@ A Next.js application that displays real-time orderbook data from multiple crypt
 
 ![Orderbook Viewer](https://img.shields.io/badge/Next.js-15.4.4-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.0-38bdf8) ![Real-time](https://img.shields.io/badge/Real--time-WebSocket-green)
 
-## 🚀 Features
-
-### Core Functionality
-- **Multi-Venue Orderbook Display**: Real-time orderbooks from OKX, Bybit, and Deribit
-- **15+ Price Levels**: Display best bids and asks with depth visualization
-- **Real-time Updates**: WebSocket connections for live data streaming
-- **Seamless Venue Switching**: Toggle between exchanges instantly
-- **Order Simulation**: Advanced order placement simulation with impact analysis
-
-### Order Simulation Form
-- **Venue Selection**: Choose from OKX, Bybit, or Deribit
-- **Symbol Input**: Support for major trading pairs (BTC-USD, ETH-USD, etc.)
-- **Order Types**: Market and Limit order simulation
-- **Side Selection**: Buy/Sell order simulation
-- **Price Control**: Dynamic price input for limit orders
-- **Quantity Input**: Flexible quantity specification
-- **Timing Controls**: Simulate different execution timings (immediate, 5s, 10s, 30s delay)
-- **Form Validation**: Comprehensive input validation with Zod schema
-
-### Order Placement Visualization
-- **Visual Order Positioning**: See exactly where your order sits in the orderbook
-- **Impact Metrics Display**:
-  - Estimated fill percentage
-  - Market impact calculation
-  - Slippage estimation
-  - Time to fill estimation
-  - Total cost calculation
-- **Color-coded Indicators**: Visual feedback for order impact levels
-- **Spread Visualization**: Real-time bid-ask spread with percentage display
-
-### Market Depth Visualization
-- **Interactive Charts**: Market depth visualization using Recharts
-- **Cumulative Volume**: Bid/ask volume accumulation display
-- **Mid-price Reference**: Clear market center indication
-- **Responsive Design**: Optimized for both desktop and mobile
-
-### Design & Performance
-- **Responsive Layout**: Desktop grid and mobile tab-based navigation
-- **Dark Trading Theme**: Professional trading interface
-- **Real-time Animations**: Smooth price change indicators
-- **Performance Optimized**: Throttled updates for high-frequency data
-- **Error Handling**: Robust error management and fallback mechanisms
-
 ## 🛠 Tech Stack
 
 ### Frontend Framework
@@ -211,58 +168,6 @@ npm run lint
 - **Connection Cleanup**: Proper WebSocket disconnection on component unmount
 - **Caching Strategy**: Smart data caching to reduce API calls
 
-## 🏗 Project Structure
-
-```
-src/
-├── app/                    # Next.js App Router
-│   ├── globals.css        # Global styles and Tailwind imports
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Main application page
-├── components/
-│   ├── ui/                # Reusable UI components
-│   │   ├── button.tsx     # Button component
-│   │   ├── card.tsx       # Card component
-│   │   ├── input.tsx      # Input component
-│   │   ├── tabs.tsx       # Tabs component
-│   │   └── dropdown.tsx   # Dropdown component
-│   ├── charts/            # Chart components
-│   │   └── MarketDepthChart.tsx
-│   ├── orderbook/         # Orderbook-related components
-│   │   ├── OrderBookTable.tsx
-│   │   ├── OrderbookDesktop.tsx
-│   │   ├── OrderbookWithSimulation.tsx
-│   │   └── OrderImpactPanel.tsx
-│   ├── venue/             # Venue-related components
-│   │   └── VenueSelector.tsx
-│   └── OrderFormDesktop.tsx
-├── hooks/                 # Custom React hooks
-│   ├── use-orderbook.ts   # Orderbook data management
-│   ├── use-order-simulation.ts # Order simulation logic
-│   └── use-throttled-orderbook.ts # Performance optimization
-├── lib/
-│   ├── types/             # TypeScript type definitions
-│   │   ├── orderbook.ts   # Orderbook data types
-│   │   └── simulation.ts  # Simulation types
-│   ├── utils/             # Utility functions
-│   │   ├── utils.ts       # General utilities
-│   │   └── orderbook-merger.ts # WebSocket data merging
-│   ├── venue/             # Exchange integration
-│   │   ├── base-venue.ts  # Abstract base class
-│   │   ├── venue-config.ts # Exchange configurations
-│   │   ├── venue-factory.ts # Factory pattern implementation
-│   │   ├── oks-venue.ts   # OKX implementation
-│   │   ├── byBit-venue.ts # Bybit implementation
-│   │   └── deribit-venue.ts # Deribit implementation
-│   ├── simulation/        # Order simulation engine
-│   │   └── order-simulation-engine.ts
-│   └── data/              # Mock and test data
-│       └── mock-orderbook.ts
-└── store/                 # Zustand state management
-    ├── orderbookStore.ts  # Orderbook state
-    └── simulationStore.ts # Simulation state
-```
-
 ## 🔧 Key Assumptions Made
 
 ### Trading Assumptions
@@ -289,37 +194,16 @@ src/
 - **Slippage Calculation**: Simplified model without advanced market microstructure
 - **No Latency Arbitrage**: Simulation doesn't account for cross-venue arbitrage
 
-## 🤝 Contributing
-
-### Development Guidelines
-1. **Code Style**: Follow ESLint and Prettier configurations
-2. **Type Safety**: Maintain strict TypeScript usage
-3. **Component Structure**: Follow established patterns in `/components`
-4. **State Management**: Use Zustand for global state, React hooks for local state
-5. **Testing**: Add unit tests for new utility functions and components
-
-### Adding New Exchanges
-1. **Create venue implementation**: Extend `BaseVenueClient` class
-2. **Add configuration**: Update `venue-config.ts`
-3. **Register in factory**: Add to `venue-factory.ts`
-4. **Update types**: Extend relevant TypeScript interfaces
-5. **Test integration**: Verify WebSocket and REST API functionality
-
 ## 📄 License
 
 This project is for educational and demonstration purposes. Please ensure compliance with exchange API terms of service.
 
-## 🐛 Known Issues & Limitations
+##  Known Issues & Limitations
 
 - **Rate Limiting**: Heavy usage may hit exchange rate limits
 - **WebSocket Reconnection**: Brief data gaps during reconnection
 - **Mobile Performance**: High-frequency updates may impact mobile performance
 - **Cross-venue Latency**: Different exchanges have varying latency characteristics
 
-## 📞 Support
-
-For issues, questions, or contributions, please refer to the project repository or contact the development team.
-
----
 
 **Built with ❤️ using Next.js, TypeScript, and modern web technologies**

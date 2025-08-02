@@ -209,7 +209,7 @@ export function MarketDepthChart({
           >
             <ComposedChart 
               data={depthData.length > 0 ? depthData : [{ price: 0, bidCumulative: 0, askCumulative: 0 }]} 
-              margin={{ top: 10, right: 30, left: 0, bottom: 50 }}
+              margin={{ top: 10, right: 40, left: 0, bottom: 20 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis 
